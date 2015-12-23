@@ -1,6 +1,6 @@
 # Physics
 
-**TODO: Add description**
+Learning stuff about Elixir
 
 ## Installation
 
