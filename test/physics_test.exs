@@ -13,4 +13,8 @@ defmodule PhysicsTest do
   test "can calculate moon escape velocity" do
     assert 2.38 == Physics.Rocketry.escape_velocity(:moon)
   end
+
+  test "can calculate orbital acceleration" do
+    assert 9.52 ==   Float.ceil(Physics.Rocketry.orbital_acceleration(100, Planets.earth), 2)
+  end
 end
