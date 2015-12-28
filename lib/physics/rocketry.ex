@@ -25,17 +25,37 @@ defmodule Physics.Rocketry do
       |> to_nearest_tenth
   end
 
-  def orbital_speed(height, planet) do
-    newtons_gravitational_constant * planet.mass / orbital_radius(height, planet.radius)
+  def orbital_acceleration(height), do: orbital_acceleration(Planets.earth,height)
+  def orbital_acceleration(:earth, height), do: orbital_acceleration(Planets.earth,height)
+  def orbital_acceleration(:mars, height), do: orbital_acceleration(Planets.mars,height)
+  def orbital_acceleration(:moon, height), do: orbital_acceleration(Planets.moon,height)
+  def orbital_acceleration(planet, height) do
+      (orbital_speed(planet, height) |> squared) / orbital_radius(planet, height)
+  end
+
+  def orbital_term(height), do: orbital_term(Planets.earth, height)
+  def orbital_term(:mars, height), do: orbital_term(Planets.mars, height)
+  def orbital_term(:earth, height), do: orbital_term(Planets.earth, height)
+  def orbital_term(:moon, height), do: orbital_term(Planets.moon, height)
+  def orbital_term(planet, height) do
+    4 * (:math.pi |> squared) * (orbital_radius(planet,height) |> cubed) / (newtons_gravitational_constant * planet.mass)
+    |> square_root
+    |> seconds_to_hours
+  end
+
+  def calculate_acceptable_orbital_term(planet, hours) do
+    (newtons_gravitational_constant * planet.mass * (hours |> hours_to_seconds |> squared)) / (4 * (:math.pi |> squared))
+      |> cube_root
+      |> to_km
+  end
+
+  defp orbital_speed(planet,height) do
+    newtons_gravitational_constant * planet.mass / orbital_radius(planet, height)
     |> square_root
   end
 
-  defp orbital_radius(height, radius) do
-    radius + (height |> to_m)
-  end
-
-  def orbital_acceleration(height, planet) do
-    (orbital_speed(height, planet) |> squared) / orbital_radius(height, planet.radius)
+  defp orbital_radius(planet, height) do
+    planet.radius + (height |> to_m)
   end
 
   defp calculate_escape(%{mass: mass, radius: radius}) do

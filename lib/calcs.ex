@@ -16,7 +16,23 @@ defmodule Calcs do
     :math.sqrt(val)
   end
 
+  def cube_root(val) do
+    :math.pow(val, 1 / 3)
+  end
+
   def squared(val) do
     val * val
+  end
+
+  def cubed(val) do
+    val * val * val
+  end
+
+  def seconds_to_hours(val) do
+    val / 3600 |> to_nearest_tenth
+  end
+
+  def hours_to_seconds(val) do
+    val * 3600
   end
 end
