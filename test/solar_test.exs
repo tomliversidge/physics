@@ -21,4 +21,13 @@ defmodule SolarTest do
     assert length(flares) == 8
   end
 
+  test "Can calculate power", %{data: flares} do
+    assert 99000 == Solar.power(%{classification: :X, scale: 99})
+  end
+
+  test "Go inside", %{data: flares} do
+    d = Solar.no_eva(flares)
+    assert length(d) == 3
+  end
+  
 end
