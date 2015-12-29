@@ -4,6 +4,10 @@ defmodule Calcs do
     Float.ceil(val, 2)
   end
 
+  def to_two_decimal_places(val) do
+    Float.round(val, 2)
+  end
+  
   def to_km(velocity) do
     velocity / 1000
   end

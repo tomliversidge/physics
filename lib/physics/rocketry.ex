@@ -46,7 +46,13 @@ defmodule Physics.Rocketry do
   def calculate_acceptable_orbital_term(planet, hours) do
     (newtons_gravitational_constant * planet.mass * (hours |> hours_to_seconds |> squared)) / (4 * (:math.pi |> squared))
       |> cube_root
+      |> from_surface(planet)
       |> to_km
+      |> to_two_decimal_places
+  end
+
+  defp from_surface(height_m, planet) do
+    height_m - planet.radius
   end
 
   defp orbital_speed(planet,height) do
