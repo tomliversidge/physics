@@ -5,8 +5,7 @@ defmodule PhysicsTest do
   setup do
     planets = [
         %{name: :earth, escape_velocity: 11.19},
-        %{name: :mars, escape_velocity: 5.01},
-        %{name: :moon, escape_velocity: 2.38}
+        %{name: :mars, escape_velocity: 5.04}
       ]
       {:ok, data: planets}
   end
@@ -14,7 +13,7 @@ defmodule PhysicsTest do
   test "can calculate escape velocity", %{data: planets} do
     Enum.each(planets,
            fn(planet) ->
-             assert planet.escape_velocity == Physics.Rocketry.escape_velocity(planet.name)
+             assert planet.escape_velocity == Planet.load[planet.name].ev
            end)
   end
 
@@ -27,6 +26,6 @@ defmodule PhysicsTest do
   end
 
   test "can calculate height" do
-    assert 6419.99 == Physics.Rocketry.calculate_acceptable_orbital_term(Planets.earth, 4)
+    assert 6419.99 == Physics.Rocketry.calculate_acceptable_orbital_term(Planet.select[:earth], 4)
   end
 end
